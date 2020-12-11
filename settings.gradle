@@ -1,0 +1,2 @@
+include ':ggmanager'
+include ':module'

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dip"
+    tools:context=".ui.home.HomeFragment">
+
+    <ImageView
+        android:id="@+id/home_iv_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_round_android_color"/>
+
+
+    <TextView
+        android:id="@+id/home_tv_label"
+        app:layout_constraintTop_toTopOf="@id/home_iv_icon"
+        app:layout_constraintStart_toEndOf="@id/home_iv_icon"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/home_tv_pkgname"
+        app:layout_constraintStart_toStartOf="@id/home_tv_label"
+        app:layout_constraintTop_toBottomOf="@id/home_tv_label"
+        android:layout_marginVertical="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/home_tv_version"
+        app:layout_constraintStart_toStartOf="@id/home_tv_label"
+        app:layout_constraintTop_toBottomOf="@id/home_tv_pkgname"
+        android:layout_marginVertical="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/home_tv_describe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="@id/home_tv_label"
+        app:layout_constraintTop_toBottomOf="@id/home_tv_version" />
+
+    <ImageView
+        android:id="@+id/home_divide_1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/frida_red"
+        android:layout_marginVertical="10dp"
+        app:layout_constraintTop_toBottomOf="@id/home_iv_icon"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/home_divide_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/home_tv_baseinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="10dp"
+                android:lineHeight="25dp"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/frida_red_trans50"
+                android:layout_marginVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@id/home_iv_icon"/>
+
+            <TextView
+                android:id="@+id/home_tv_permission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:lineHeight="25dp"/>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
