@@ -52,6 +52,9 @@ public class SignkillerViewModel extends ViewModel {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                if(mSf == null || mSf.getActivity() == null) {
+                    break;
+                }
                 mSf.getActivity().runOnUiThread(()-> {
                     setSwitch(NativeLib.isSignKillerProcessAlive());
                 });

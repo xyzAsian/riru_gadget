@@ -7,10 +7,6 @@ import com.gadget.manager.ui.signkiller.SignkillerViewModel;
 
 public class NativeLib {
 
-    static {
-        System.loadLibrary("ggmanager");
-    }
-
     public static boolean isStatusSuccess(String status) {
 //        Log.e("ggmanager","status : "+status);
         if("0".equals(status.trim())) {

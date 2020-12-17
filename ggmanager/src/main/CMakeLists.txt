@@ -10,9 +10,9 @@ SET(SRC_LIST
         "jni/cmd.cpp"
         "jni/sign_killer.cpp")
 
-add_library(ggmanager SHARED ${SRC_LIST})
+add_library(xyzggmanager SHARED ${SRC_LIST})
 
-target_link_libraries(ggmanager
+target_link_libraries(xyzggmanager
         android
         log
         z)

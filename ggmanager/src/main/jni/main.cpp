@@ -25,7 +25,7 @@ JNICALL
 extern "C"
 void start_kill_sign(JNIEnv* env, jclass clazz){
     LOGV("[%s]",__FUNCTION__ );
-    start_kill_signcheck(env);
+    start_sign_kill_server();
 }
 
 
@@ -34,7 +34,7 @@ JNICALL
 extern "C"
 void stop_kill_sign(JNIEnv* env, jclass clazz) {
     LOGV("[%s]",__FUNCTION__ );
-    stop_kill_signcheck();
+    stop_sign_kill_server();
 }
 
 JNIEXPORT
@@ -42,7 +42,7 @@ JNICALL
 extern "C"
 jboolean is_sign_alive(JNIEnv* env, jclass clazz) {
     LOGV("[%s]",__FUNCTION__ );
-    return is_child_alive() == 0;
+    return check_sign_kill_server_status();
 }
 
 static inline void setJniMethodTable(const char *name, const char *args, void *func, JNINativeMethod *method) {
@@ -72,6 +72,8 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved) {
     if (vm->GetEnv((void**)&env, JNI_VERSION_1_4) != JNI_OK) {
         return JNI_ERR;
     }
+
+    _init(env);
 
     registerNativeMethod(env);
 

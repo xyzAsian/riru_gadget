@@ -7,7 +7,7 @@
 
 #include <android/log.h>
 
-#define LOG_TAG "ggmanager"
+//#define LOG_TAG "ggmanager"
 
 #ifdef LOG_TAG
 #define LOGV(...)  __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)

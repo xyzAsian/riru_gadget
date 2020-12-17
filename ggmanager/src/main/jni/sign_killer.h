@@ -6,10 +6,12 @@
 #define RIRU_GADGET_SIGN_KILLER_H
 #include <jni.h>
 
-void start_kill_signcheck(JNIEnv* env);
+void _init(JNIEnv* env);
 
-void stop_kill_signcheck();
+void start_sign_kill_server();
 
-int is_child_alive();
+void stop_sign_kill_server();
+
+int check_sign_kill_server_status();
 
 #endif //RIRU_GADGET_SIGN_KILLER_H

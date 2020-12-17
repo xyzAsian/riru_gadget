@@ -59,17 +59,29 @@ else
 
   # unzip frida GadGet library
   extract "$ZIPFILE" "system/lib/libxyzgg.so" "$MODPATH"
+  extract "$ZIPFILE" "system/lib/libxyzggmanager.so" "$MODPATH"
   extract "$ZIPFILE" "system/lib/libxyzgg.config.so" "$MODPATH"
   set_perm "$MODPATH/system/lib/libxyzgg.config.so" 0 0 0777
+  extract "$ZIPFILE" "system/lib/frida-inject-14.1.2" "$MODPATH"
+  set_perm "$MODPATH/system/lib/frida-inject-14.1.2" 0 0 0777
+  extract "$ZIPFILE" "system/lib/libxyzggAndroidSignature.js" "$MODPATH"
+  set_perm "$MODPATH/system/lib/libxyzggAndroidSignature.js" 0 0 0777
 
   if [ "$IS64BIT" = true ]; then
     ui_print "- Extracting arm64 libraries"
     extract "$ZIPFILE" "system/lib64/libriru_$RIRU_MODULE_ID.so" "$MODPATH"
 
     extract "$ZIPFILE" "system/lib64/libxyzgg.so" "$MODPATH"
+    extract "$ZIPFILE" "system/lib64/libxyzggmanager.so" "$MODPATH"
     extract "$ZIPFILE" "system/lib64/libxyzgg.config.so" "$MODPATH"
     set_perm "$MODPATH/system/lib64/libxyzgg.config.so" 0 0 0777
+    extract "$ZIPFILE" "system/lib64/frida-inject-14.1.2" "$MODPATH"
+    set_perm "$MODPATH/system/lib64/frida-inject-14.1.2" 0 0 0777
+    extract "$ZIPFILE" "system/lib64/libxyzggAndroidSignature.js" "$MODPATH"
+    set_perm "$MODPATH/system/lib64/libxyzggAndroidSignature.js" 0 0 0777
   fi
+
+  extract "$ZIPFILE" "system/app/GGManager.apk" "$MODPATH"
 fi
 
 set_perm_recursive "$MODPATH" 0 0 0755 0644

@@ -25,6 +25,11 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+    delete project('ggmanager').buildDir
+    delete "$rootDir/template/magisk_module/system/app/GGManager.apk"
+    delete "$rootDir/template/magisk_module/system/lib/libxyzggmanager.so"
+    delete "$rootDir/template/magisk_module/system/lib64/libxyzggmanager.so"
+    delete "$rootDir/out"
 }
 
 ext {

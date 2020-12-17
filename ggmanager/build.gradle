@@ -23,10 +23,22 @@ android {
         }
     }
 
+    signingConfigs {
+        release {
+            File strFile = new File("./key.jks")
+            storeFile file(strFile)
+            storePassword "xyz123"
+            keyPassword "xyz123"
+            keyAlias "key0"
+        }
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -59,4 +71,37 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+import java.nio.file.Files
+
+def templateDir = file("$rootDir/template/magisk_module")
+
+android.applicationVariants.all { variant ->
+    if(variant.name.equalsIgnoreCase("release")) {
+        variant.outputs.all { output ->
+            def f = output.outputFileName
+            if (f != null && f.endsWith('.apk')) {
+                def fileName = "GGManager.apk"
+                output.outputFileName = fileName
+            }
+        }
+    }
+
+    def task = variant.assembleProvider.get()
+    task.doLast {
+        def fileName = "GGManager.apk"
+        Files.deleteIfExists(file("${templateDir.path}/system/app/$fileName").toPath());
+        Files.copy(file("$buildDir/outputs/apk/release/$fileName").toPath(), file("${templateDir.path}/system/app/$fileName").toPath())
+
+        def nativeOutDir = file("build/intermediates/cmake/release/obj")
+        copy {
+            from "$nativeOutDir/arm64-v8a/"
+            into "${templateDir.path}/system/lib64/"
+        }
+        copy {
+            from "$nativeOutDir/armeabi-v7a"
+            into "${templateDir.path}/system/lib/"
+        }
+    }
 }
