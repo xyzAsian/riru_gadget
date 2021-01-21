@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,12 +22,16 @@ import com.gadget.manager.utils.NativeLib;
 
 public class HomeFragment extends Fragment {
 
+    public ImageView ivEditGGVer, ivEditGGMode;
+    public TextView tvGGVer, tvGGMode;
+    public Switch ggSwich;
+
     private HomeViewModel homeViewModel;
 
     private ToastCallback suToastCallback;
 
     private ImageView ivIcon;
-    public TextView tvLabel,tvPkgname, tvVersion, tvDescribe, tvBaseInfo, tvPermissions;
+    public TextView tvLabel,tvPkgname, tvVersion, tvDescribe, tvBaseInfo, tvOthers;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -43,6 +48,13 @@ public class HomeFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
+        ivEditGGVer = root.findViewById(R.id.iv_edit_ggversion);
+        ivEditGGMode  = root.findViewById(R.id.iv_edit_gg_mode);
+        tvGGVer = root.findViewById(R.id.tv_ggversion);
+        tvGGMode = root.findViewById(R.id.tv_gg_mode);
+
+        ggSwich = root.findViewById(R.id.swich_gg_inject);
+
         ivIcon = root.findViewById(R.id.home_iv_icon);
 
         tvLabel = root.findViewById(R.id.home_tv_label);
@@ -51,12 +63,12 @@ public class HomeFragment extends Fragment {
         tvDescribe = root.findViewById(R.id.home_tv_describe);
 
         tvBaseInfo = root.findViewById(R.id.home_tv_baseinfo);
-        tvPermissions = root.findViewById(R.id.home_tv_permission);
+        tvOthers = root.findViewById(R.id.home_tv_others);
 
+        suToastCallback = new ToastCallback(getActivity(), "请给与GGManager root权限!", R.drawable.ic_failed);
 
         homeViewModel.init(this);
 
-        suToastCallback = new ToastCallback(getActivity(), "请给与GGManager root权限!", R.drawable.ic_failed);
         return root;
     }
 

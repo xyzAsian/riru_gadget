@@ -15,8 +15,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.gadget.manager.R;
+import com.gadget.manager.ui.EditGadgetModeActivity;
 import com.gadget.manager.ui.PackagesActivity;
 import com.gadget.manager.utils.NativeLib;
+import com.gadget.manager.utils.SPUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +46,7 @@ public class HomeViewModel extends ViewModel implements View.OnClickListener{
         this.hf = hf;
         this.mContext = hf.getActivity();
         hf.getIvIcon().setOnClickListener(this);
+        hf.ivEditGGMode.setOnClickListener(this);
     }
 
     public void initData(String pkgname) {
@@ -63,20 +66,16 @@ public class HomeViewModel extends ViewModel implements View.OnClickListener{
             baseInfo.append("lastUpdateTime\t\t\t:\t\t").append(sdf.format(new Date(packageInfo.lastUpdateTime)));
             hf.tvBaseInfo.setText(baseInfo);
 
-            StringBuilder permissions = new StringBuilder();
-            if(packageInfo.requestedPermissions != null && packageInfo.requestedPermissions.length > 0) {
-                for (String pminfo : packageInfo.requestedPermissions) {
-                    permissions.append(pminfo).append("\n");
-                }
-            }
-            if(packageInfo.permissions!= null && packageInfo.permissions.length > 0) {
-                for (PermissionInfo pminfo: packageInfo.permissions) {
-                    permissions.append(pminfo.name).append("\n");
-                }
-            }
-            hf.tvPermissions.setText(permissions);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            hf.tvGGVer.setText("Frida libgadget.so version is : "+SPUtils.getGGVersion());
+            String mode = NativeLib.exec("su -c \"cat /data/adb/modules/riru-RiruGadget/system/lib/libxyzgg.config.so\"", false);
+            hf.tvGGMode.setText(mode);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,6 +86,9 @@ public class HomeViewModel extends ViewModel implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.home_iv_icon:
                 this.hf.startActivity(new Intent(this.hf.getActivity(), PackagesActivity.class));
+                break;
+            case R.id.iv_edit_gg_mode:
+                this.hf.startActivity(new Intent(this.hf.getActivity(), EditGadgetModeActivity.class));
                 break;
         }
     }

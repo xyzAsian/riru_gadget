@@ -18,9 +18,11 @@ android {
                 arguments "-DANDROID_TOOLCHAIN=clang", //使用的编译器clang/gcc
                         "-DANDROID_STL=c++_static"  //cmake默认就是 gnustl_static
                 cppFlags "-std=c++11"
-                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
+                abiFilters 'armeabi-v7a', 'arm64-v8a'
             }
         }
+
+        manifestPlaceholders = [GG_VERSION:"$gadgetVersion"]
     }
 
     signingConfigs {

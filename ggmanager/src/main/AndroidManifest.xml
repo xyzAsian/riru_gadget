@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gadget.manager" >
+    package="com.gadget.manager">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -12,13 +12,19 @@
         android:icon="@mipmap/favicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Riru_gadget" >
+        android:theme="@style/Theme.Riru_gadget">
+        <activity android:name=".ui.EditGadgetModeActivity"></activity>
+
+        <meta-data
+            android:name="ggVersion"
+            android:value="${GG_VERSION}" />
+
         <activity
-            android:theme="@style/Theme.Riru_gadget"
-            android:name=".ui.PackagesActivity" />
+            android:name=".ui.PackagesActivity"
+            android:theme="@style/Theme.Riru_gadget" />
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

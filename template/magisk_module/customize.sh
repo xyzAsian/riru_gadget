@@ -32,26 +32,6 @@ if [ "$ARCH" = "x86" ] || [ "$ARCH" = "x64" ]; then
   ui_print "not support x86 and x64 yet"
   abort "*********************************************************"
 
-  # unzip Riru library
-  extract "$ZIPFILE" "system_x86/lib/libriru_$RIRU_MODULE_ID.so" "$MODPATH"
-
-  # unzip frida GadGet library
-  extract "$ZIPFILE" "system_x86/lib/libxyzgg.so" "$MODPATH"
-  extract "$ZIPFILE" "system_x86/lib/libxyzgg.config.so" "$MODPATH"
-  set_perm "$MODPATH/system_x86/lib/libxyzgg.config.so" 0 0 0777
-
-  mv "$MODPATH/system_x86/lib" "$MODPATH/system/lib"
-
-  if [ "$IS64BIT" = true ]; then
-    ui_print "- Extracting x64 libraries"
-    extract "$ZIPFILE" "system_x86/lib64/libriru_$RIRU_MODULE_ID.so" "$MODPATH"
-
-    extract "$ZIPFILE" "system_x86/lib64/libxyzgg.so" "$MODPATH"
-    extract "$ZIPFILE" "system_x86/lib64/libxyzgg.config.so" "$MODPATH"
-    set_perm "$MODPATH/system_x86/lib64/libxyzgg.config.so" 0 0 0777
-
-    mv "$MODPATH/system_x86/lib64" "$MODPATH/system/lib64"
-  fi
 else
   ui_print "- Extracting arm libraries"
   # unzip Riru library

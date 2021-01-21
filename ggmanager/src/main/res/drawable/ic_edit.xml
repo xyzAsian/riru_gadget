@@ -1,0 +1,4 @@
+<vector android:height="50dp" android:viewportHeight="1024"
+    android:viewportWidth="1024" android:width="50dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/frida_red_trans50" android:pathData="M978.67,111.92 L911.09,44.48c-18.66,-18.62 -48.91,-18.62 -67.57,0l-101.34,101.15 135.14,134.86 101.34,-101.15C997.34,160.74 997.34,130.54 978.67,111.92zM848,912 L112,912 112,176l533.71,0 96,-96L64,80C37.49,80 16,101.49 16,128l0,832c0,26.51 21.49,48 48,48l832,0c26.51,0 48,-21.49 48,-48L944,285.01l-96,96L848,912zM843.54,314.22l-135.12,-134.86L303.01,583.97l135.14,134.86L843.54,314.22zM223.97,797.44l180.13,-44.9 -135.15,-134.9L223.97,797.44z"/>
+</vector>
