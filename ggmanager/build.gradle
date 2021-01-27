@@ -93,17 +93,17 @@ android.applicationVariants.all { variant ->
     def task = variant.assembleProvider.get()
     task.doLast {
         def fileName = "GGManager.apk"
-        Files.deleteIfExists(file("${templateDir.path}/system/app/$fileName").toPath());
-        Files.copy(file("$buildDir/outputs/apk/release/$fileName").toPath(), file("${templateDir.path}/system/app/$fileName").toPath())
+        Files.deleteIfExists(file("${templateDir.path}/system/app/GGManager/$fileName").toPath());
+        Files.copy(file("$buildDir/outputs/apk/release/$fileName").toPath(), file("${templateDir.path}/system/app/GGManager/$fileName").toPath())
 
         def nativeOutDir = file("build/intermediates/cmake/release/obj")
         copy {
             from "$nativeOutDir/arm64-v8a/"
-            into "${templateDir.path}/system/lib64/"
+            into "${templateDir.path}/system/app/GGManager/lib/arm64/"
         }
         copy {
             from "$nativeOutDir/armeabi-v7a"
-            into "${templateDir.path}/system/lib/"
+            into "${templateDir.path}/system/app/GGManager/lib/arm/"
         }
     }
 }
