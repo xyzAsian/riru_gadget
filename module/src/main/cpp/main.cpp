@@ -21,7 +21,8 @@ void get_pkg_name(char* pkgname, int size){
     str_strip(pkgname);
 }
 
-static void loadGadGetLib() {
+static void loadGadGetLib(JNIEnv *env) {
+#if 0
     while (1) {
 #if defined (__x86_64__) || defined (__aarch64__)
         const char* libggpath = "/system/lib64/libxyzgg.so";
@@ -42,6 +43,14 @@ static void loadGadGetLib() {
         LOGV("dlopen libxyzgg.so success.");
         return;
     }
+#else
+    LOGV("System.loadLibrary(xyzgg)");
+    jclass system_class = env->FindClass("java/lang/System");
+    jmethodID loadLibrary = env->GetStaticMethodID(system_class, "loadLibrary", "(Ljava/lang/String;)V");
+    env->CallStaticVoidMethod(system_class, loadLibrary, env->NewStringUTF("xyzgg"));
+    LOGV("System.loadLibrary(xyzgg) success!");
+#endif
+
 }
 
 static void forkAndSpecializePre(
