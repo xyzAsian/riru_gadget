@@ -1,5 +1,7 @@
 package com.gadget.manager.ui.home;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gadget.manager.R;
 import com.gadget.manager.callback.ToastCallback;
+import com.gadget.manager.ui.EditGadgetModeActivity;
 import com.gadget.manager.ui.packages.PackagesFragment;
 import com.gadget.manager.utils.NativeLib;
 
@@ -32,6 +35,8 @@ public class HomeFragment extends Fragment {
 
     private ImageView ivIcon;
     public TextView tvLabel,tvPkgname, tvVersion, tvDescribe, tvBaseInfo, tvOthers;
+
+    private TextView mTvNotifcation;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -64,6 +69,9 @@ public class HomeFragment extends Fragment {
 
         tvBaseInfo = root.findViewById(R.id.home_tv_baseinfo);
         tvOthers = root.findViewById(R.id.home_tv_others);
+
+        mTvNotifcation = root.findViewById(R.id.tv_notification);
+        mTvNotifcation.setVisibility(View.GONE);
 
         suToastCallback = new ToastCallback(getActivity(), "请给与GGManager root权限!", R.drawable.ic_failed);
 
@@ -110,5 +118,20 @@ public class HomeFragment extends Fragment {
 
     public TextView getTvDescribe() {
         return tvDescribe;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == EditGadgetModeActivity.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            showNotifcation("修改 Gadget mode 成功！");
+        }
+    }
+
+    public void showNotifcation(String msg) {
+        if(mTvNotifcation != null) {
+            mTvNotifcation.setVisibility(View.VISIBLE);
+            mTvNotifcation.setText(msg);
+        }
     }
 }

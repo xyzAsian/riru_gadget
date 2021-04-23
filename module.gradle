@@ -4,9 +4,9 @@ ext {
     moduleName = "RiruGadget"
     moduleAuthor = "tomcat"
     moduleDescription = "Riru module to load frida gadget."
-    moduleVersion = "v1.1.1"
+    moduleVersion = "v1.2.0"
     gadgetVersion = "14.2.2"
-    moduleVersionCode = 111140202
+    moduleVersionCode = 120140202
 
     moduleMinRiruApiVersion = 9
     moduleMinRiruVersionName = "v22.0"

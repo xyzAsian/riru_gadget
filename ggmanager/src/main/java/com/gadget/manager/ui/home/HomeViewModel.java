@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -20,8 +21,12 @@ import com.gadget.manager.ui.PackagesActivity;
 import com.gadget.manager.utils.NativeLib;
 import com.gadget.manager.utils.SPUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class HomeViewModel extends ViewModel implements View.OnClickListener{
@@ -75,10 +80,37 @@ public class HomeViewModel extends ViewModel implements View.OnClickListener{
         try {
             hf.tvGGVer.setText("Frida libgadget.so version is : "+SPUtils.getGGVersion());
             String mode = NativeLib.exec("su -c \"cat /data/adb/modules/riru-RiruGadget/system/lib/libxyzgg.config.so\"", false);
-            hf.tvGGMode.setText(mode);
+            hf.tvGGMode.setText(formatGadgetMode(mode));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String formatGadgetMode(String gadgetMode) {
+        if (TextUtils.isEmpty(gadgetMode)) {
+            return gadgetMode;
+        }
+        try {
+            StringBuilder builder = new StringBuilder();
+            JSONObject jsonObject = new JSONObject(gadgetMode);
+            Iterator<String> iterator = jsonObject.keys();
+            while (iterator.hasNext()) {
+                String key = iterator.next();
+                builder.append(key).append("\n");
+
+                JSONObject jsonObjectChild = jsonObject.getJSONObject(key);
+                Iterator<String> iteratorChild = jsonObjectChild.keys();
+
+                while (iteratorChild.hasNext()) {
+                    String keyChild = iteratorChild.next();
+                    builder.append("\t").append(keyChild).append(" : ").append(jsonObjectChild.getString(keyChild)).append("\n");
+                }
+            }
+            return builder.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return gadgetMode;
     }
 
     @Override
@@ -88,7 +120,7 @@ public class HomeViewModel extends ViewModel implements View.OnClickListener{
                 this.hf.startActivity(new Intent(this.hf.getActivity(), PackagesActivity.class));
                 break;
             case R.id.iv_edit_gg_mode:
-                this.hf.startActivity(new Intent(this.hf.getActivity(), EditGadgetModeActivity.class));
+                this.hf.startActivityForResult(new Intent(this.hf.getActivity(), EditGadgetModeActivity.class), EditGadgetModeActivity.REQUEST_CODE);
                 break;
         }
     }

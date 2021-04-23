@@ -9,9 +9,12 @@
     <EditText
         android:id="@+id/et_gg_mode"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="400dp"
         android:layout_margin="10dp"
+        android:padding="5dp"
         android:gravity="start"
+        android:textSize="14sp"
+        android:lineHeight="15sp"
         android:background="@drawable/bg_edittext_full"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>

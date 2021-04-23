@@ -22,8 +22,22 @@ void get_pkg_name(char* pkgname, int size){
 }
 
 static void loadGadGetLib(JNIEnv *env) {
-#if 0
-    while (1) {
+    if(access("/data/local/tmp/systemload",F_OK) == 0) {
+        LOGV("Delay 3s to load xyzgg...");
+        sleep(3);
+        LOGV("System.loadLibrary(xyzgg)");
+        jclass system_class = env->FindClass("java/lang/System");
+        if(system_class == NULL) {
+            LOGE("find system_class failed");
+        }
+        jmethodID loadLibrary = env->GetStaticMethodID(system_class, "loadLibrary", "(Ljava/lang/String;)V");
+        if(loadLibrary == NULL) {
+            LOGE("get loadLibrary method failed");
+        }
+        env->CallStaticVoidMethod(system_class, loadLibrary, env->NewStringUTF("xyzgg"));
+        LOGV("System.loadLibrary(xyzgg) success!");
+    } else {
+
 #if defined (__x86_64__) || defined (__aarch64__)
         const char* libggpath = "/system/lib64/libxyzgg.so";
 #else
@@ -37,20 +51,11 @@ static void loadGadGetLib(JNIEnv *env) {
         void* handle = dlopen(libggpath,RTLD_LOCAL);
         if(handle == NULL) {
             LOGE("dlopen libxyzgg.so error. %s ", dlerror());
-            sleep(10);
-            continue;
+        } else {
+            LOGV("dlopen libxyzgg.so success.");
         }
-        LOGV("dlopen libxyzgg.so success.");
-        return;
     }
-#else
-    LOGV("System.loadLibrary(xyzgg)");
-    jclass system_class = env->FindClass("java/lang/System");
-    jmethodID loadLibrary = env->GetStaticMethodID(system_class, "loadLibrary", "(Ljava/lang/String;)V");
-    env->CallStaticVoidMethod(system_class, loadLibrary, env->NewStringUTF("xyzgg"));
-    LOGV("System.loadLibrary(xyzgg) success!");
-#endif
-
+    return;
 }
 
 static void forkAndSpecializePre(
@@ -76,7 +81,7 @@ static void forkAndSpecializePost(JNIEnv *env, jclass clazz, jint res) {
             LOGV("forkAndSpecializePost package : %s", g_pkgname);
             int32_t try_count = 10;
             pthread_t thread_id;
-            while (pthread_create(&thread_id, NULL, reinterpret_cast<void *(*)(void *)>(loadGadGetLib), NULL) && try_count > 0) {
+            while (pthread_create(&thread_id, NULL, reinterpret_cast<void *(*)(void *)>(loadGadGetLib), env) && try_count > 0) {
                 LOGW("loadGadGetLib thread error, sleep 1 second, and try again.");
                 sleep(1);
                 --try_count;
