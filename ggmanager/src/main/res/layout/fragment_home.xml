@@ -23,9 +23,11 @@
                 android:id="@+id/tv_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="3dp"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="3dp"
                 android:background="@drawable/bg_tv_notifcation"
                 android:textColor="@color/white"
+                android:gravity="center_horizontal"
                 android:visibility="gone"/>
 
             <ImageView
