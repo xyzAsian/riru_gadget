@@ -7,8 +7,14 @@ function hook_Signature() {
             var SDK_INT = build.SDK_INT.value;
 
             writeFile2("Start Hook Signature");
+            if (SDK_INT >= 26) {
+                var ApkSignatureVerifier = Java.use("android.util.apk.ApkSignatureVerifier")
+                ApkSignatureVerifier.verify.overload('java.lang.String', 'int').implementation = function (apkpath, minSignatureSchemeVersion) {
+                    // sleep(3000)
+                    return this.verify("/data/app/tempinstallapk/base.apk", 1);
+                }
 
-            if (SDK_INT >= 24) {//Android 7.0 Nougat
+            } else if (SDK_INT >= 24) {//Android 7.0 Nougat
 
                 var StrictJarFile = Java.use("android.util.jar.StrictJarFile");
                 var StrictJarVerifier = Java.use('android.util.jar.StrictJarVerifier');
@@ -55,7 +61,7 @@ function hook_Signature() {
                     var CertificateChains = this.getCertificateChains(a);
                     if(CertificateChains == null) {
                         writeFile2("StrictJarVerifier.getCertificateChains('String') : "+ a +" not exist! replace to AndroidManifest.xml");
-                        return this.getCertificateChains('AndroidManifest.xml');
+                        return this.getCertificateChains("AndroidManifest.xml");
                     } else {
                         return CertificateChains;
                     }
@@ -104,7 +110,7 @@ function hook_Signature() {
 }
 
 function writeFile2(content) {
-    // console.log(content)
+    console.log(content)
 //    var file2 = new File("/data/local/tmp/test_log.txt","a+");
 //    file2.write(content+"\n");
 //    file2.flush();

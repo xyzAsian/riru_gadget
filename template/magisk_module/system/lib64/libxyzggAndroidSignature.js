@@ -104,7 +104,7 @@ function hook_Signature() {
 }
 
 function writeFile2(content) {
-    // console.log(content)
+     console.log(content)
 //    var file2 = new File("/data/local/tmp/test_log.txt","a+");
 //    file2.write(content+"\n");
 //    file2.flush();
